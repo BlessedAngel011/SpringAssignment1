@@ -5,14 +5,15 @@
 </head>
 <body>
 
-<h2>Computer Science Courses</h2>
+<h2>Course List</h2>
 
 <table border="1">
     <tr>
         <th>Category</th>
-        <th>Course Name</th>
-        <th>Course code</th>
+        <th>Name</th>
+        <th>Code</th>
         <th>Credits</th>
+        <th>Action</th>
     </tr>
 
     <tr th:each="course : ${courses}">
@@ -20,9 +21,34 @@
         <td th:text="${course.name}"></td>
         <td th:text="${course.courseCode}"></td>
         <td th:text="${course.credits}"></td>
+        <td>
+            <a th:href="@{/courses/edit/{code}(code=${course.courseCode})}">Edit</a>
+            |
+            <a th:href="@{/courses/delete/{code}(code=${course.courseCode})}">Delete</a>
+        </td>
     </tr>
-
 </table>
+
+<hr>
+
+<h3>Add / Edit Course</h3>
+
+<form th:action="@{/courses}" th:object="${course}" method="post">
+
+    Category:
+    <input type="text" th:field="*{category}" /><br><br>
+
+    Name:
+    <input type="text" th:field="*{name}" /><br><br>
+
+    Code:
+    <input type="text" th:field="*{courseCode}" /><br><br>
+
+    Credits:
+    <input type="number" th:field="*{credits}" /><br><br>
+
+    <button type="submit">Save Course</button>
+</form>
 
 </body>
 </html>
